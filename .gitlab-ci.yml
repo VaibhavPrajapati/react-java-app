@@ -3,13 +3,7 @@
 variables:
   BUILD_IMAGE: "maven:3.6.3-jdk-8"
   MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2"
-  BUILD_GOAL: "install"
-  CI_PROJECT_DIR: /home/vagrant/
-  
-cache:
-  key: maven
-  paths:
-    - $CI_PROJECT_DIR/.m2
+  BUILD_GOAL: "install -DskipTests"
   
 stages:
   - build
