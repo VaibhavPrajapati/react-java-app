@@ -10,7 +10,6 @@ stages:
   
 .build_template: &build_template
   only:
-    - master
     - development
   image: $BUILD_IMAGE
   stage: build
