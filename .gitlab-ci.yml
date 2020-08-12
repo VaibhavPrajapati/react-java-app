@@ -7,6 +7,11 @@ variables:
   
 stages:
   - build
+
+cache:
+  key: maven
+  paths:
+    - $CI_PROJECT_DIR/.m2/
   
 .build_template: &build_template
   only:
