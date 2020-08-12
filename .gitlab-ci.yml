@@ -20,8 +20,8 @@ stages:
   stage: build
   script:
     - |
-      mkdir -p ~/.m2
-      if [ -f .m2.settings.xml ]
+      mkdir -p ~/.m2/
+      if [ -f .m2.settings.xml ]; then
         cp .m2.settings.xml ~/.m2/settings.xml
       fi
       mvn -f ./springboot-backend/ $BUILD_GOAL
