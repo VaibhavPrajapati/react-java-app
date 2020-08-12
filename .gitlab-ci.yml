@@ -10,6 +10,7 @@ stages:
   
 .build_template: &build_template
   only:
+    - master
     - development
   image: $BUILD_IMAGE
   stage: build
@@ -20,9 +21,8 @@ stages:
         cp .m2.settings.xml ~/.m2/settings.xml
       fi
       mvn -f ./springboot-backend/ $BUILD_GOAL
-   artifacts:
+  artifacts:
     paths:
     - springboot-backend/target/*.jar  
 build:
   <<: *build_template
-  
