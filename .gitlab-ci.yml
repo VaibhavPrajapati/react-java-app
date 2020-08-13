@@ -7,7 +7,7 @@ variables:
   DEPLOY_IMAGE: "nitorinfotech/ansible:v1"
   
 stages:
-  - build
+#  - build
   - deploy
 
 cache:
@@ -39,6 +39,7 @@ cache:
   script:
     - echo "$SSH_PRIVATE_KEY"
     - |
+      ping 192.168.32.11
       cd ansible
       eval $(ssh-agent -s)
       ssh-add - <<< "$SSH_PRIVATE_KEY"
