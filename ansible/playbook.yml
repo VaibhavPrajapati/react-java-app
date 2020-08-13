@@ -1,14 +1,14 @@
 ---
 - name: 
-  remote_user: vagrant
+  remote_user: prajapati_firebase
   hosts: all
   tasks:
   - name: Copy file with owner and permissions
     copy:
       src: "{{ source_jar }}"
       dest: /home/vagrant/employee-api
-      owner: vagrant
-      group: vagrant
+      owner: prajapati_firebase
+      group: prajapati_firebase
       mode: '0644'
 
   - name: Installing Server

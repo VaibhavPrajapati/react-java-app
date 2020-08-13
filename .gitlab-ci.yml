@@ -1,5 +1,4 @@
 ---
-
 variables:
   BUILD_IMAGE: "maven:3.6.3-jdk-8"
   MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2"
@@ -7,8 +6,8 @@ variables:
   DEPLOY_IMAGE: "nitorinfotech/ansible:v1"
   
 stages:
-  - deploy
   - build
+  - deploy
 
 cache:
   key: maven
@@ -37,9 +36,7 @@ cache:
   image: $DEPLOY_IMAGE
   stage: deploy
   script:
-    - echo "$SSH_PRIVATE_KEY"
     - |
-      ping 192.168.32.11
       cd ansible
       eval $(ssh-agent -s)
       ssh-add - <<< "$SSH_PRIVATE_KEY"
