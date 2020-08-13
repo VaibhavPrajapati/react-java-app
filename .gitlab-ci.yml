@@ -37,10 +37,11 @@ cache:
   image: $DEPLOY_IMAGE
   stage: deploy
   script:
+    - echo "$SSH_PRIVATE_KEY"
     - |
       cd ansible
       eval $(ssh-agent -s)
-      ssh-add - <<< "${SSH_PRIVATE_KEY}"
+      ssh-add - <<< "$SSH_PRIVATE_KEY"
       mkdir -p ~/.ssh
       chmod 700 ~/.ssh
 
