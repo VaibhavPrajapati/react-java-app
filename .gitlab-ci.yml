@@ -4,7 +4,7 @@ variables:
   BUILD_IMAGE: "maven:3.6.3-jdk-8"
   MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2"
   BUILD_GOAL: "install  -DskipTests"
-  DEPLOY_IMAGE: "nitorinfotech/ansible"
+  DEPLOY_IMAGE: "nitorinfotech/ansible:v1"
   
 stages:
   - build
@@ -45,7 +45,7 @@ cache:
       chmod 700 ~/.ssh
 
     - mv $CI_PROJECT_DIR/springboot-backend/target/*.jar $CI_PROJECT_DIR/springboot-backend/target/app-apis.jar
-    - ansible-playbook -i $ANSIBLE_INVENTORY $ANSIBLE_PLAYBOOK --extra-vars "artifact_path=$CI_PROJECT_DIR/springboot-backend/target/app-apis.jar"
+    - ansible-playbook -i $ANSIBLE_INVENTORY $ANSIBLE_PLAYBOOK --extra-vars "source_jar=$CI_PROJECT_DIR/springboot-backend/target/app-apis.jar"
 
 build:
   <<: *build_template
