@@ -1,0 +1,16 @@
+---
+- name: 
+  remote_user: vagrant
+  hosts: all
+  tasks:
+  - name: Copy file with owner and permissions
+    copy:
+      src: "{{ source_jar }}"
+      dest: /home/vagrant/employee-api
+      owner: vagrant
+      group: vagrant
+      mode: '0644'
+
+  - name: Installing Server
+    shell: java -jar /home/vagrant/employee-api/app-apis.jar
+    

@@ -3,10 +3,12 @@
 variables:
   BUILD_IMAGE: "maven:3.6.3-jdk-8"
   MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2"
-  BUILD_GOAL: "install -DskipTests"
+  BUILD_GOAL: "install"
+  DEPLOY_IMAGE: "nitorinfotech/ansible"
   
 stages:
   - build
+  - deploy
 
 cache:
   key: maven
@@ -26,8 +28,30 @@ cache:
         cp .m2.settings.xml ~/.m2/settings.xml
       fi
       mvn -f ./springboot-backend/ $BUILD_GOAL
+
   artifacts:
     paths:
-    - springboot-backend/target/*.jar  
+    - $CI_PROJECT_DIR/springboot-backend/target/*.jar 
+
+.deploy_template: &deploy_template
+  image: $DEPLOY_IMAGE
+  stage: deploy
+  script:
+    - |
+      cd ansible
+      eval $(ssh-agent -s)
+      ssh-add - <<< "${SSH_PRIVATE_KEY}"
+      mkdir -p ~/.ssh
+      chmod 700 ~/.ssh
+
+    - mv $CI_PROJECT_DIR/springboot-backend/target/*.jar $CI_PROJECT_DIR/springboot-backend/target/app-apis.jar
+    - ansible-playbook -i $ANSIBLE_INVENTORY $ANSIBLE_PLAYBOOK --extra-vars "artifact_path=$CI_PROJECT_DIR/springboot-backend/target/app-apis.jar"
+
 build:
   <<: *build_template
+
+deploy:
+  variables:
+    ANSIBLE_INVENTORY: dev-hosts
+    ANSIBLE_PLAYBOOK: playbook.yml
+  <<: *deploy_template
