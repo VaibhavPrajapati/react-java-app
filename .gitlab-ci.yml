@@ -55,5 +55,5 @@ deploy:
     ANSIBLE_INVENTORY: dev-hosts
     ANSIBLE_PLAYBOOK: playbook.yml
   only:
-    development
+    - development
   <<: *deploy_template
