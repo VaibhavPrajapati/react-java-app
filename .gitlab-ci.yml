@@ -20,6 +20,8 @@ cache:
     - master
     - development
   image: $BUILD_IMAGE
+  tags: 
+    - gcp-runner
   stage: build
   script:
     - |
@@ -36,6 +38,8 @@ cache:
 .deploy_template: &deploy_template
   image: $DEPLOY_IMAGE
   stage: deploy
+  tags: 
+    - gcp-runner
   script:
     - |
       cd ansible
