@@ -7,8 +7,8 @@ variables:
   DEPLOY_IMAGE: "nitorinfotech/ansible:v1"
   
 stages:
-#  - build
   - deploy
+  - build
 
 cache:
   key: maven
