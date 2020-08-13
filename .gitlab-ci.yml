@@ -3,7 +3,7 @@
 variables:
   BUILD_IMAGE: "maven:3.6.3-jdk-8"
   MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2"
-  BUILD_GOAL: "install"
+  BUILD_GOAL: "install  -DskipTests"
   DEPLOY_IMAGE: "nitorinfotech/ansible"
   
 stages:
@@ -54,4 +54,6 @@ deploy:
   variables:
     ANSIBLE_INVENTORY: dev-hosts
     ANSIBLE_PLAYBOOK: playbook.yml
+  only:
+    development
   <<: *deploy_template
