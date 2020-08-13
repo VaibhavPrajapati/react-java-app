@@ -1,6 +1,5 @@
 ---
-tags: 
-  - gcp-runner
+
 variables:
   BUILD_IMAGE: "maven:3.6.3-jdk-8"
   MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2"
