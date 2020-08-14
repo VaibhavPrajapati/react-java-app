@@ -50,7 +50,8 @@ cache:
       ssh-add - <<< "$SSH_PRIVATE_KEY"
       mkdir -p ~/.ssh
       chmod 700 ~/.ssh
-
+      [ -e known_hosts ] && rm known_hosts
+      
     - mv $CI_PROJECT_DIR/springboot-backend/target/*.jar $CI_PROJECT_DIR/springboot-backend/target/app-apis.jar
     - ansible-playbook -i $ANSIBLE_INVENTORY $ANSIBLE_PLAYBOOK --extra-vars "source_jar=$CI_PROJECT_DIR/springboot-backend/target/app-apis.jar"
 
