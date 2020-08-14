@@ -6,11 +6,11 @@
   - name: Copy file with owner and permissions
     copy:
       src: "{{ source_jar }}"
-      dest: /home/vagrant/employee-api
+      dest: /home/prajapati_firebase/employee-api
       owner: prajapati_firebase
       group: prajapati_firebase
       mode: '0644'
 
   - name: Installing Server
-    shell: java -jar /home/vagrant/employee-api/app-apis.jar
+    shell: java -jar /home/prajapati_firebase/employee-api/app-apis.jar
     
