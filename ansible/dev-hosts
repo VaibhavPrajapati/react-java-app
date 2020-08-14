@@ -1,2 +1,8 @@
 [test]
 35.232.89.138
+
+[insecuressh:children]
+test
+
+[insecuressh:vars]
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'
