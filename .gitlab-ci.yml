@@ -5,7 +5,10 @@ variables:
   MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2"
   BUILD_GOAL: "install  -DskipTests"
   DEPLOY_IMAGE: "nitorinfotech/ansible:v1"
-  
+  PKG_PATH: "./docker/"
+  DOCKER_HOST: tcp://localhost:2375/
+  DOCKER_DRIVER: overlay2
+
 stages:
   - build
   - deploy
