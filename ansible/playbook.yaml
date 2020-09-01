@@ -1,0 +1,52 @@
+---
+- hosts: dev_server
+  remote_user: vagrant
+  become: yes
+  tasks:
+    - name: check if package is installed
+      package_facts:
+        manager: auto
+      tags:
+        - test
+
+    - name: Install tomcat8 if it is absent
+      apt:
+        name: tomcat8
+        state: present
+      when: '"tomcat8" not in ansible_facts.packages'
+
+    - name: Install nginx if it is absent
+      apt:
+        name: nginx
+        state: present
+      when: '"nginx" not in ansible_facts.packages'
+
+
+    - name: Copy war file with owner and permissions
+      copy:
+        src: "{{ project_dir }}/springboot-backend/target/springboot-backend-0.0.1-SNAPSHOT.war"
+        dest: /var/lib/tomcat8/webapps/app.war
+        owner: vagrant
+        group: vagrant
+        mode: '0777'
+
+    - name: Restart tomcat8 service
+      service:
+        name: tomcat8
+        state: restarted
+      become: yes
+      become_method: sudo
+      
+    - name: Copy build file with owner and permissions
+      copy:
+        src: "{{ project_dir }}/react-frontend/build/"
+        dest: /var/www/html/
+        owner: vagrant
+        group: vagrant
+        mode: '0777'
+
+    - name: Restart nginx service
+      service: 
+        name: nginx
+        state: restarted
+      become: yes    
